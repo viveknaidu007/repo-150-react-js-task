@@ -27,7 +27,7 @@ Functional Requirements
 
 7. Use the Search Bar Component: Update App.js to include your SearchBar component 
 
-
+8. here npm run build means , it will create build folder for production upload
 
 # commands for react js
 ```bash
