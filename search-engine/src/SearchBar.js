@@ -8,25 +8,34 @@ const SearchBar = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    // Load JSON data from the local file
+    // Fetch JSON data
     fetch('/data/countries.json')
       .then(response => response.json())
-      .then(data => setData(data))
+      .then(data => {
+        console.log('Fetched Data:', data); // Debugging log
+        setData(data);
+      })
       .catch(error => console.error('Error fetching data:', error));
   }, []);
 
   const handleChange = (event) => {
     const input = event.target.value;
     setQuery(input);
-    if (input.length > 2) {
-      const filteredSuggestions = data.filter(item =>
-        item.country.toLowerCase().includes(input.toLowerCase()) ||
-        item.capital.toLowerCase().includes(input.toLowerCase())
-      );
-      setSuggestions(filteredSuggestions);
-    } else {
+
+    if (input.trim() === '') {
       setSuggestions([]);
+      return;
     }
+
+    const lowerCaseInput = input.toLowerCase();
+    const filteredSuggestions = data.filter(item =>
+      item.country.toLowerCase().includes(lowerCaseInput) ||
+      item.capital.toLowerCase().includes(lowerCaseInput)
+    );
+
+    console.log('Filtered Suggestions:', filteredSuggestions); // Debugging log
+
+    setSuggestions(filteredSuggestions);
   };
 
   const handleSuggestionClick = (suggestion) => {
